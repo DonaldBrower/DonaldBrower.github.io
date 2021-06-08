@@ -1,0 +1,64 @@
+h1, h2, h3, p, a {
+  font-family: Calibri;
+}
+p {
+  line-height: 1.5;
+}
+
+
+/* INDEX.HTML */
+
+main.index {
+  padding: 5.5rem 10rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.portrait {
+  grid-column-start: -4;
+}
+
+.portrait img {
+  max-width: 45rem;
+}
+
+.site-nav {
+  grid-row-start: 1;
+  grid-column-start: 4;
+}
+
+
+/* RESUME.HTML */
+main.resume {
+  display: grid;
+  grid-gap: 3em;
+  grid-template-columns: 18em 30em 44em;
+  grid-template-rows: repeat(2, 17em);
+}
+section.job:nth-child(even) {
+  background-color: antiquewhite;
+}
+section.job:nth-child(2n+1) {
+  background-color: honeydew;
+}
+section.job section.job-data {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+section.job h3.company {
+  padding: 0;
+  margin: 0;
+}
+ section.job section.job-data p {
+  padding: 0;
+  margin-top: 0;
+  margin-right: .75rem
+}
+/*
+.job .job-data p::after {
+  content: "•";
+}
+.job .job-data p:last-child::after {
+  content: "";
+} */
