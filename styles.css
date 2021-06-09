@@ -6,6 +6,14 @@ p {
 }
 
 
+
+
+
+
+
+
+
+
 /* INDEX.HTML */
 
 main.index {
@@ -29,7 +37,7 @@ main.index {
 
 
 /* RESUME.HTML */
-main.resume {
+.resume {
   display: grid;
   grid-gap: 3em;
   grid-template-columns: 18em 30em 44em;
@@ -62,3 +70,12 @@ section.job h3.company {
 .job .job-data p:last-child::after {
   content: "";
 } */
+
+/****/
+
+.resume {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: none;
+  grid-gap: 0;
+}
