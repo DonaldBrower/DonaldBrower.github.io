@@ -16,15 +16,12 @@ body {
 }
 
 .index {
-
   display: grid;
   align-items: stretch;
   flex-direction: column;
   height: 100vh;
 }
-.index .intro-text {
-  
-}
+
 .index .intro-text p {
   line-height: 1.9;
   margin: 30px 0;
@@ -32,15 +29,6 @@ body {
   font-size: 1.10rem;
   font-family: 'Open Sans', sans-serif;
 }
-/* .index .intro-text p:first-child {
-  margin: 0 0 10px 0;
-  padding: 10px 10px 0 12px;
-} */
-/* .index .intro-text p:last-child {
-  margin: 10px 0 0 0;
-  padding: 0 10px 10px 12px;
-}
- */
 .index .portrait {
   width: 100vw;
 }
@@ -50,7 +38,7 @@ body {
   max-height:100%;
 }
 
-.site-nav {
+.index .site-nav {
   height: 7em;
   text-align: end;
   flex-grow: 1;
@@ -59,39 +47,53 @@ body {
   justify-content: center;
   padding: 0 0 0 11px;
 }
-.site-nav ul {
+.index .site-nav ul {
   background-color:bisque;
   display: flex;
   gap: 1rem;
 }
-.site-nav ul li {
+.index .site-nav ul li {
   list-style-type: none;
   text-align: center;
 }
-.site-nav a {
+.index .site-nav a {
   color: black;
   font-size: 1.8rem;
   font-family: 'Squada One', cursive;
   font-weight: bolder;
 }
 
+
+/* resume.html*/
+.resume header, 
+.resume .summary, 
+.resume .skills,
+.resume .education,
+.resume .experience{
+  background-color: white;
+  border: 4px solid lightblue;
+  margin: .9rem;
+  padding: .2rem
+}
+
+
 /* landscape mode for mobile phones */
 @media screen and (min-width: 650px) {
   .index {
-    height: auto;
+    height: auto; /* changes from last @media */
 
     display: grid;
     grid-row-gap: 6rem;
-    /*     grid-template-columns: repeat(3, 1fr); */
     margin: 0;
     padding: 0;
-  }
-  .intro-text {
+  } 
+
+  .index .intro-text {
     grid-column: 2 / 4;
     margin: 0;
     padding: 0 17rem 0 0;  
-  }
-  
+  } 
+
   .index .portrait {
     grid-column: 1 / 3;
     width: 35vw;
@@ -101,12 +103,12 @@ body {
     border-radius: 4px;
   }
 
-  .site-nav {
+  .index .site-nav {
     grid-column: span 2;
     height: auto;
     padding: 0 0 1rem 0;
   }
-  .site-nav ul {
+  .index .site-nav ul {
     flex-direction: column;
     margin: 0;
     border: 4px solid lightblue;
@@ -114,50 +116,11 @@ body {
     padding: 10px;
 
   }
-  .site-nav ul li {
+  .index .site-nav ul li {
     text-align: left;
   }
+
+  
+  /* resume.html*/
 }
 
-
-/* style.css | file:///Users/donaldbrower/git/homepage/style.css */
-
-@media screen and (min-width: 650px) {
-  .intro-text {
-    /* padding: 0; */
-    padding: 0 17rem 0 0;
-  }
-}
-
-@media screen and (min-width: 650px) {
-  .index .portrait {
-    /* width: 40vw; */
-    width: 35vw;
-  }
-}
-
-@media screen and (min-width: 650px) {
-  .index {
-    grid-row-gap: 2rem;
-  }
-}
-
-@media screen and (min-width: 650px) {
-  .index .portrait {
-    grid-column: 1 / 3;
-  }
-}
-
-@media screen and (min-width: 650px) {
-  .index .portrait {
-    /* margin: 0; */
-    margin: 0 0 0 11rem;
-  }
-}
-
-@media screen and (min-width: 650px) {
-  .index {
-    /* grid-row-gap: 2rem; */
-    grid-row-gap: 6rem;
-  }
-}
