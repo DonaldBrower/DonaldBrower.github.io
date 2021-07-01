@@ -107,10 +107,9 @@ body {
   padding: 0.2rem;
 }
 
-/* resume 2 */
-.post section.text {
-}
-.text {
+/* post */
+
+/* .text {
   width: 80%;
   padding: 1rem 0 0 0;
   margin: 2rem auto 0 auto;
@@ -119,6 +118,16 @@ body {
 .text p,
 .text h1 {
   margin: 0 1rem 0.5rem 1rem;
+} */
+.post article {
+/*   display: grid; */
+  /*   grid-row-gap: 2rem; */
+  /*   grid-column-gap: 2rem; */
+  /* grid-template-columns: 1fr 1fr;  */
+}
+.post article section {
+  background-color: white;
+  /*     margin: 10px; */
 }
 
 /* landscape mode for mobile phones */

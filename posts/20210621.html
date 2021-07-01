@@ -16,31 +16,31 @@
 <body>
   <div class="post">
     <a href="./../index.html">Return home</a>
-    <section class="text">
+    <article class="text">
       <h1>Async problem set from JS The Hard Parts</h1>
-      <p><strong>debounce</strong></p>
-      <pre>
+      <section>
+        <p><strong>debounce</strong></p>
+        <p>Every time debouncedFx is called, if 2000 ms haven't ellapsed since the last time it was called, debouncedFx
+          returns undefined. If 2000 ms or more have ellapsed since debouncedFx was last called, debouncedFx will call
+          the
+          function definition that was passed to the debounce function which generated debounceFx.</p>
+
+        <pre>
         const debouncedFx = debounce(fx, 2000);
     
-        setTimeout(debouncedFx(), 0)    // calls fx
-        setTimeout(debouncedFx(), 1000) // doesn't call fx
-        setTimeout(debouncedFx(), 2000) // doesn't call fx
-        setTimeout(debouncedFx(), 4000) // calls fx
-      </pre>
-      <p>Every time debouncedFx is called, if 2000 ms haven't ellapsed since the last time it was called, debouncedFx
-        returns undefined. If 2000 ms or more have ellapsed since debouncedFx was last called, debouncedFx will call the
-        function definition that was passed to the debounce function which generated debounceFx.</p>
-      <pre>
         function sayHi() {
           return "hi";
         }
     
         const debouncedSayHi = debounce(sayHi, 3000);
         
-        console.log(debouncedSayHi());                              // -> 'hi'
-        setTimeout(() => { console.log(debouncedSayHi()); }, 2000); // -> undefined
+        console.log(debouncedSayHi());                              
+        // -> 'hi'
+        setTimeout(() => { console.log(debouncedSayHi()); }, 2000); 
+        // -> undefined
         setTimeout(() => { console.log(debouncedSayHi()); }, 4000); // -> undefined
-        setTimeout(() => { console.log(debouncedSayHi()); }, 8000); // -> 'hi'
+        setTimeout(() => { console.log(debouncedSayHi()); }, 8000); 
+        // -> 'hi'
   
         function debounce(callback, interval) {
           let readyToCall = true;
@@ -72,9 +72,11 @@
           return debouncedFunction;
         }
      </pre>
+      </section>
 
-      <p><strong>second clock class</strong></p>
-      <pre>
+      <section>
+        <p><strong>second clock class</strong></p>
+        <pre>
       /*
         SecondClock class has two methods:
           start()
@@ -124,9 +126,10 @@
         }
       }            
        </pre>
-
-      <p><strong>promised</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>promised</strong></p>
+        <pre>
       const createPromise = promised("wait for it...");
       createPromise.then((val) => console.log(val));
       // will log "wait for it..." to the console after 2 seconds
@@ -139,9 +142,10 @@
         });
       } 
        </pre>
-
-      <p><strong>delay counter</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>delay counter</strong></p>
+        <pre>
       /*
         Write a function delayCounter that accepts a number (called 'target') as the first argument and a number of milliseconds (called 'wait') as the second argument, and returns a function.
         
@@ -173,8 +177,10 @@
         return interval;
       } 
       </pre>
-      <p><strong>every x seconds for y seconds</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>every x seconds for y seconds</strong></p>
+        <pre>
       function everyXsecsForYsecs(func, interval, duration) {
         let elapsed = 0;
         let clock = setInterval(() => {
@@ -194,8 +200,10 @@
       // should call theEnd every 2 seconds, for 20 seconds
       
       </pre>
-      <p><strong>limited repeat</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>limited repeat</strong></p>
+        <pre>
       /*
       Create a function limitedRepeat that console logs hi for now every second, but only for 5 seconds.
       Research how to use clearInterval if you are not sure how to do this. 
@@ -214,8 +222,10 @@
         }, 1000);
       }
       </pre>
-      <p><strong>broken record</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>broken record</strong></p>
+        <pre>
       /*
       Create a function brokenRecord that console logs hi again every second.
       Use the End Code button to stop the console logs when you are satisfied that it is working. 
@@ -229,8 +239,10 @@
       }
       
       </pre>
-      <p><strong>delayed greet</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>delayed greet</strong></p>
+        <pre>
       /*
       Create a function delayedGreet that console logs welcome after 3 seconds. 
       */
@@ -242,8 +254,10 @@
         }, 3000);
       } 
       </pre>
-      <p><strong>hello goodbye</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>hello goodbye</strong></p>
+        <pre>
       /*
       Create a function helloGoodbye that console logs hello right away, and good bye after 2 seconds. 
       */
@@ -255,8 +269,10 @@
         }, 2000);
       }
       </pre>
-      <p><strong>thinking point</strong></p>
-      <pre>
+      </section>
+      <section>
+        <p><strong>thinking point</strong></p>
+        <pre>
       /*
       Thinking point (no writing code necessary for this challenge): Inspect the code given to you in Challenge 1. In what order should the console logs come out? Howdy first or Partnah first? 
       */
@@ -280,7 +296,8 @@
       because setTimeout is put into the callback queue, it cannot execute it's code until all the code in the global call stack is run, because you cannot have asynchronous actions happening while synchronous code is being run, because that's just not how it works
       */
       </pre>
-    </section>
+      </section>
+    </article>
   </div>
 </body>
 
