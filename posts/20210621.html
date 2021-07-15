@@ -9,6 +9,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Squada+One&display=swap');
   </style>
   <link rel="stylesheet" href="./../style.css">
+  <link rel="stylesheet" href="./../vendor/css/prism.css">
 
   <title>Answers to the async problem set from JS: The Hard Parts on Frontend Masters</title>
 </head>
@@ -19,7 +20,7 @@
     <article class="text">
       <h1>Async problem set from JS The Hard Parts</h1>
       <section>
-        <p><strong>debounce</strong></p>
+        <h3>debounce</h3>
         <p>Every time debouncedFx is called, if 2000 ms haven't ellapsed since the last time it was called, debouncedFx
           returns undefined. If 2000 ms or more have ellapsed since debouncedFx was last called, debouncedFx will call
           the
@@ -258,47 +259,53 @@
       <section>
         <p><strong>hello goodbye</strong></p>
         <pre>
-      /*
-      Create a function helloGoodbye that console logs hello right away, and good bye after 2 seconds. 
-      */
-      helloGoodbye();
-      function helloGoodbye() {
-        console.log("Hello");
-        setTimeout(() => {
-          console.log("Gooooodbye");
-        }, 2000);
-      }
+          <code class="language-js">
+/*
+Create a function helloGoodbye that console logs hello right away, and good bye after 2 seconds.
+*/
+helloGoodbye();
+function helloGoodbye() {
+  console.log("Hello");
+  setTimeout(() => {
+    console.log("Gooooodbye");
+  }, 2000);
+}
+        </code>
       </pre>
       </section>
       <section>
         <p><strong>thinking point</strong></p>
         <pre>
-      /*
-      Thinking point (no writing code necessary for this challenge): Inspect the code given to you in Challenge 1. In what order should the console logs come out? Howdy first or Partnah first? 
-      */
-
-      function sayHowdy() {
-        console.log("Howdy");
-      }
-
-      function testMe() {
-        setTimeout(sayHowdy, 0);
-        console.log("Partnah");
-      }
-
-      testMe(); // what order should these log out? Howdy or Partnah first?
-
-      /* ANSWER
-
-      > Partnah
-      > Howdy
-
-      because setTimeout is put into the callback queue, it cannot execute it's code until all the code in the global call stack is run, because you cannot have asynchronous actions happening while synchronous code is being run, because that's just not how it works
-      */
+        <code class="language-js">            
+/*
+Thinking point (no writing code necessary for this challenge): Inspect the code given to you in Challenge 1. In what order should the console logs come out? Howdy first or Partnah first? 
+*/
+         
+function sayHowdy() {
+  console.log("Howdy");
+}
+         
+function testMe() {
+  setTimeout(sayHowdy, 0);
+  console.log("Partnah");
+}
+         
+testMe(); // what order should these log out? Howdy or Partnah first?
+         
+/* ANSWER
+         
+> Partnah
+> Howdy
+         
+because setTimeout is put into the callback queue, it cannot execute it's code until all the code in the global call stack is run, because you cannot have asynchronous actions happening while synchronous code is being run, because that's just not how it works
+*/
+        </code>
       </pre>
       </section>
     </article>
   </div>
+
+  <script src="./../vendor/js/prism.js"></script>
 </body>
 
 </html>
