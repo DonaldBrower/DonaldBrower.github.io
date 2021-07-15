@@ -7,42 +7,48 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Squada+One&display=swap');
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
-  <!-- <link rel="stylesheet" href="./styles.css"> -->
   <title>Donny B dot com</title>
 </head>
 
 <body>
   <main class="index">
-    <section class="intro-text">
-      <p><strong>Hi, my name is Donny</strong>, and I'm a computer programmer in California. I started working with code
-        in 2015, and had my first professional experiences in 2018. At my jobs I've built ETL and database migration
-        programs,
-        websites and features for web apps, and software deployment tools.</p>
-
-      <p>I'm looking for work in the San Francisco Bay Area. If you are reading this because of a link in a
-        job application, please feel free to take a look at my resume, and look through my github, both linked to in the
-        navigation.</p>
+    <section class="hat">
+      <h1>posts and programs</h1>
+      <nav>
+        <!-- <p>donny writing</p> -->
+        <ul>
+          <li><a href="">posts</a></li>
+          <li><a href="">contact</a></li>
+          <li><a href="">about</a></li>
+        </ul>
+      </nav>
     </section>
-    <section class="portrait">
-      <img src="./images/twin-donnys.jpg" alt="two of me, giving you a thumbs up.">
-    </section>
-    <section class="site-nav">
-      <ul>
-        <li><a href="./resume.html">Resume</a></li>
-        <li><a href="./resume2.html">Resume 2</a></li>
-        <li><a href="https://github.com/DonaldBrower">GitHub</a></li>
+    <!-- <section class="site-nav">
+      <li><a href="./resume.html">Resume</a></li>
+      <li><a href="https://github.com/DonaldBrower">GitHub</a></li>
       </ul>
-
-    </section>
+    </section> -->
     <section class="posts">
-      <h2>Posts! By Me!</h2>
       <ul>
-        <li><a href="./posts/20210618.html">June 18th, 2021</a></li>
-        <li><a href="./posts/20210621.html">June 18th, 2021</a></li>
+        <li>
+          <article><a href="./posts/20210618.html">The Number of Atoms</a>
+            <p class="description">Here is one way to approach the number of atoms problem, which is a common interview
+              question</p>
+          </article>
+        </li>
+        <li>
+          <article><a href="./posts/20210621.html">Solutions for JS Hardparts Exercises</a>
+            <p>Problems to understand async functions, higher order functions, closures and variable environments,
+              promises, and object oriented programming.</p>
+          </article>
+        </li>
       </ul>
     </section>
-
   </main>
 </body>
 
