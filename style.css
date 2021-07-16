@@ -31,6 +31,15 @@ body {
   background-color: oldlace;
   font-family: "Libre Baskerville", serif;
 }
+body {
+  background-color: #e5e5f7;
+  /* opacity: 0.3; */
+  background-image: radial-gradient(
+    rgba(255, 0, 0, 0.3) 1.6500000000000001px,
+    rgba(229, 229, 247, 0.3) 1.6500000000000001px
+  );
+  background-size: 33px 33px;
+}
 p {
   line-height: 1.35;
 }
@@ -45,6 +54,10 @@ li {
 
 /* 2 index.html - base & mobile first*/
 
+.index {
+  z-index: 10001;
+  background-color: oldlace;
+}
 .index .hat {
   background-image: url("./images/laserlense.jpg");
   width: 100vw;
@@ -111,7 +124,7 @@ li {
   border: 1px solid;
   list-style-type: none;
   padding: 0.8rem 0.8rem 0.8rem 0.8rem;
-  margin: 0.8rem 0.8rem 0.8rem 0.8rem;
+  margin: 0.8rem 0.8rem 0.175rem 0.8rem;
   /* margin: 1rem 0 0 0; */
   /* padding: 0.4rem 0 0.4rem 0.4rem; */
 }
@@ -144,24 +157,61 @@ li {
   }
 }
 /* landscape mode for mobile phones */
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 630px) {
+  .index {
+    max-width: 630px;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid;
+  }
+  .index .hat {
+    max-width: 630px;
+  }
 }
 
 @media screen and (min-width: 650px) {
 }
 
 /* 3. <post>.html */
-
+.post .hat {
+  background-image: url("./images/laserlense.jpg");
+  width: 100%;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  background-size: cover;
+  color: white;
+}
 .post a {
   display: block;
   margin: 1rem 0 0 1rem;
 }
 .post .text {
-  margin: 0 0.6rem 0 0.6rem;
+  margin: 1.8rem 1.8rem 0 1.8rem;
 }
-.post .text h1 {
-  margin: 2rem 0 0 0;
+.post .text hr {
+  margin: 1.4rem 0 2rem 0;
 }
-.post .text section p {
+.post .text h2 {
+  font-size: 1.8rem;
+  margin: 0 0 2rem 0;
+  text-decoration: underline;
+}
+.post .text h3 {
+  font-size: 1.5rem;
+  margin: 1.2rem 0 1.5rem 0;
+}
+.post .text p {
   font-size: 1.3rem;
+}
+
+@media screen and (min-width: 800px) {
+  .post {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: oldlace;
+    border: 1px solid;
+  }
 }
