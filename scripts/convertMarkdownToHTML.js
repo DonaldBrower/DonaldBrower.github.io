@@ -2,13 +2,26 @@ const fs = require("fs/promises");
 const path = require("path");
 const showdown = require("showdown");
 const { parse } = require("node-html-parser");
-const converter = new showdown.Converter();
 
 const mdDir = "/Users/donaldbrower/git/postsandprograms.com/md";
 const htmlDir = "/Users/donaldbrower/git/postsandprograms.com/posts";
 
 const mdFile = "20210618.md";
 const htmlFile = "20210618.html";
+
+const classMap = {
+  code: "language-js",
+};
+
+const bindings = Object.keys(classMap).map((key) => ({
+  type: "output",
+  regex: new RegExp(`<${key}(.*)>`, "g"),
+  replace: `<${key} class="${classMap[key]}" $1>`,
+}));
+
+const converter = new showdown.Converter({
+  extensions: [...bindings],
+});
 
 (async function main() {
   const mdToConvert = await getFile(path.join(mdDir, mdFile));
@@ -37,3 +50,11 @@ async function replaceFile(thePath, content) {
     console.error("errors: ", e.message);
   }
 }
+
+const text = `
+# 1st Heading
+## 2nd Heading
+
+- first item
+- second item
+`;

@@ -10,7 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet">
-  <title>Solution for the Number of Atoms problem</title>
+  <link rel="stylesheet" href="./../vendor/css/prism.css">
+  <title>Solutions to Problem Sets from JS: Hard Parts</title>
 </head>
 
 <body>
@@ -18,17 +19,75 @@
     <p><a href="../index.html">home</a> > <a href="./index.html">posts</a></p>
     <section class="hat">
     </section>
-    <section class="text"><h2 id="goosesolutionstoproblemsetsfromjshardparts">GOOSe Solutions to Problem Sets from JS: Hard Parts</h2>
+    <section class="text"><h2 id="solutionstoproblemsetsfromjshardparts">Solutions to Problem Sets from JS: Hard Parts</h2>
 <p>Problem sets to help you understand the different features of JS:</p>
 <ul>
-<li><a href="PATH">Async function execution, callbacks, the callback queue</a></li>
-<li><a href="PATH">JS Scope, variable environments, and programming with closure</a></li>
-<li><a href="PATH">Promises, deferring, the microtask queue</a></li>
-<li><a href="path">Object prototypes, the class syntax</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/async">Async function execution, callbacks, the callback queue</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/closure">JS Scope, variable environments, and programming with closure</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/promise">Promises, deferring, the microtask queue</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/oop">Object prototypes, the class syntax</a></li>
 </ul>
 <p>The questions were created by someone at Codesmith, and the answers are ones that I wrote.</p>
-<h3 id="async">Async</h3></section>
+<h3 id="async">Async</h3>
+<h4 id="debounce">Debounce</h4>
+<pre><code class="language-js" >function debounce(callback, interval) {
+  let timer,
+    readyToCall = true;
+
+  /**
+   *
+   * @returns callback(), or "undefined" depending on if interval ms have ellapsed since last call to debouncedFunction
+   */
+  function debouncedFunction() {
+    if (readyToCall) {
+      readyToCall = false;
+
+      timer = setTimeout(() =&gt; {
+        readyToCall = true;
+      }, interval);
+
+      return callback();
+    } else {
+      // when debouncedFunction is not ready to be called,the timer running from the previous call should be reset—making it "debouced three seconds from every call", instead of "debounded three seconds from every successful call"
+      clearTimeout(timer);
+
+      timer = setTimeout(() =&gt; {
+        readyToCall = true;
+      }, interval);
+
+      return "unsucessful";
+    }
+  }
+
+  return debouncedFunction;
+}
+
+function sayHi() {
+  return "hi";
+}
+
+const debouncedSayHi = debounce(sayHi, 3000);
+
+/* tests */
+
+console.log(debouncedSayHi()); // -&gt; 'hi'
+
+setTimeout(() =&gt; {
+  console.log(debouncedSayHi());
+}, 2000); // -&gt; undefined
+
+setTimeout(() =&gt; {
+  console.log(debouncedSayHi());
+}, 4000); // -&gt; undefined
+
+setTimeout(() =&gt; {
+  console.log(debouncedSayHi());
+}, 8000); // -&gt; 'hi'
+
+// ?? using iterm to run file, there is a second pause in between when cb for last setTimeout? I would expect it to just cut out right there
+</code></pre></section>
   </div>
+  <script src="./../vendor/js/prism.js"></script>
 </body>
 
 </html>
