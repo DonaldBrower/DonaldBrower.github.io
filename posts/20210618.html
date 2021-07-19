@@ -5,123 +5,29 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Squada+One&display=swap');
-  </style>
   <link rel="stylesheet" href="./../style.css">
-  <!-- <link rel="stylesheet" href="./styles.css"> -->
-  <title>A post, from Donny B dot com</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <title>Solution for the Number of Atoms problem</title>
 </head>
 
 <body>
-
   <div class="post">
-    <a href="./../index.html">Return home</a>
-    <section class="text">
-      <h1>First post, too hot </h1>
-      <p>
-        There are little babies running around, and I can't focus on anything. Everyone loves little babies.
-      </p>
-      <p>
-        My friend sent me the <em>number of atoms problem</em> the other day.
-        You take a chemical formula, in the form of a string, like this:
-        <strong>Mg(OH)2</strong> and return a string with the total number of atoms, in alphabetical order:
-        <strong>H2Mg1O2</strong>
-      </p>
-      <p>I thought a formula like this: <strong>Mg(OH2)2</strong> should yield
-        <strong>H4Mg1O2</strong>, because the groups coefficent 2 is is distributed to H2 and O1, but actually that is
-        not
-        what would be happening here. You would actually distribute the 2 iside the parens to both H and O, thus making
-        the result <strong>H4Mg104</strong>
-      </p>
-      <p>At first, I just moved through each group, tokenized the atom string contents according to my first assumption,
-        distributed the coeffecient, then replaced the group in the formula with the simplified string, and keep passing
-        the simplified string into this function until all the paren groups are replaced. Then we tokenize the entire
-        string, just the atom names and numbers, reduce so we have a count of all the atoms in the formula for each type
-        of atom, and then sort and rejoin for your final string.</p>
-      <p>But as you might guess, this gives us the wrong result.</p>
-      <p>I'm still working on getting it right. What I'm doing is running a first pass to expand the atom strings inside
-        the group, before the distribution happens. I can't exactly figure out what the last part is going to be, but
-        I'm
-        sure it will what I've already written.</p>
-      <p>Once all the groups are worked through once the first pass is done, will it be valid to simply run the same
-        tokenizer as in the first failed attempt? would the counts be right?</p>
-      <p>Here are all the comments I've made in the file:</p>
-      <pre>
-    /*
-      trying to solve this by:
-      1. expanding any parenthesis groups and distributing the right hand coeffecients
-           (Mg2)->3<-, until it's just one long string eg:  Abc(Def(Abc)2)3 -> AbcDef3Abc2Abc2
-      2. Tokenizing the string: [
-          ["Abc": 1],
-          ["Def": 3],
-          ["Abc": 2],
-          ["Abc": 2],
-        ]
-      3. Reducing, and sorting by arrayElement[0]: [
-          ["Abc": 5],
-          ["Def": 3]
-        ]
-      4. join the tuples and making a new string: "Abc5Def3"
-    */
-    /*
-      turn a string of atom names and numbers into an array of tuples:
-      [ [name, number], ... ]
-    */
-    /*
-      atoms are tokenized while recursivly moving through the inside all of the
-      grouped sections of the forumla, as well as after reducing the tuples in a map
-      uses state machine, returns an array of Tuples:
-      [atomName: str, atomQty: num]
-    */
-    /*
-      vocab:
-        - atom string: [[A [b [...b]]...]
-            in a formula: HO(KOg2)3
-              -> HO, KOg
-        - atom number [atomString[*int]]
-            in a formula: HO(KOg2)3
-              -> 2 -- from the atom string/number COMBINATION of KOg2
-            note that 3 is not an atom number. it is a grouping multiplier number
-            so it is applied to the atom qty in the tuples, which has already been given whatever initial value after the atom number was distributed to the atoms.
-      before the characters and state obj goes through the state machine:
-        - get every atom string and optional number that is either independent of groups, or the groups' content
-        let tempTuples = []
-        atomChars.forEach
-        HO(KOg3)2 -> ["HO" "KOg3"]
-        - create a new tuple for every substring of this atom string that represents
-        and individual atom eg:
-    
-        "HO" -> [[H, undef], [O, undef]]
-    */
-    /*
-      logic for the atoms tokenization
-        -> read each character and it's next
-        -> build up the atom string and the string of the optional number
-        -> reset these string states once it's determined the loop is on the
-          last character of the atom
-    
-        update: 3:38 - the state machine logic is all wrong. i don't know yet
-        what the implication is for the rest of the program.
-    
-        right now, tokenize("MgOg2") would return [Mg, 1], [Og, 2]
-        but it should return [Mg, 2], [Og, 2]
-    
-        if parenthesis are used, then only the atoms inside get the coeffcient, eg:
-          "Mg(OH)2" [Mg, 1], [O, 2], [H, 2]
-        is it possible to just distribute the atom string coeffecients before handling any parenthesis groups, that
-        way one the distribution of the group coefeccient  happens, it can be applied to all the tuples, and then can be simply reduced
-        without worrying about if the right distribution was made with regards to the atom string expansions
-        right now Mg(OH)2 ->
-      */
-      /*
-        split by atom
-        use option number at the end of continuous atom markers, or zero, and assign it to right side of tuple
-        K(MgAu(HO2)2)3
-      */
-    </pre>
+    <p><a href="../index.html">home</a> > <a href="./index.html">posts</a></p>
+    <section class="hat">
     </section>
+    <section class="text"><h2 id="goosesolutionstoproblemsetsfromjshardparts">GOOSe Solutions to Problem Sets from JS: Hard Parts</h2>
+<p>Problem sets to help you understand the different features of JS:</p>
+<ul>
+<li><a href="PATH">Async function execution, callbacks, the callback queue</a></li>
+<li><a href="PATH">JS Scope, variable environments, and programming with closure</a></li>
+<li><a href="PATH">Promises, deferring, the microtask queue</a></li>
+<li><a href="path">Object prototypes, the class syntax</a></li>
+</ul>
+<p>The questions were created by someone at Codesmith, and the answers are ones that I wrote.</p>
+<h3 id="async">Async</h3></section>
   </div>
 </body>
 

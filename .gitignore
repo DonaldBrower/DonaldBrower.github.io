@@ -1,2 +1,5 @@
 .DS_STORE
 post-idea-*.txt
+*.txt
+node_modules
+*.log

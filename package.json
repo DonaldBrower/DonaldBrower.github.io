@@ -1,0 +1,23 @@
+{
+  "name": "postsandprograms.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DonaldBrower/DonaldBrower.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DonaldBrower/DonaldBrower.github.io/issues"
+  },
+  "homepage": "https://github.com/DonaldBrower/DonaldBrower.github.io#readme",
+  "dependencies": {
+    "node-html-parser": "^4.1.0",
+    "showdown": "^1.9.1"
+  }
+}

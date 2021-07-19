@@ -28,7 +28,8 @@ html {
   padding: 0;
 }
 body {
-  background-color: oldlace;
+  background-color: #f6f6fd;
+  /* background-color: oldlace; */
   font-family: "Libre Baskerville", serif;
 }
 body {
@@ -52,11 +53,19 @@ li {
   list-style-type: none;
 }
 
+/* default word wrapping for prsimjs pre and code blocks */
+code[class*="language-"],
+pre[class*="language-"] {
+  white-space: pre-wrap !important;
+  /* word-break: break-word !important; */
+}
+
 /* 2 index.html - base & mobile first*/
 
 .index {
   z-index: 10001;
-  background-color: oldlace;
+  background-color: #f6f6fd;
+  /* background-color: oldlace; */
 }
 .index .hat {
   background-image: url("./images/laserlense.jpg");
@@ -173,6 +182,10 @@ li {
 }
 
 /* 3. <post>.html */
+.post-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 .post .hat {
   background-image: url("./images/laserlense.jpg");
   width: 100%;
@@ -184,12 +197,16 @@ li {
   background-size: cover;
   color: white;
 }
+.post {
+  background-color: #f6f6fd;
+  /* background-color: oldlace; */
+}
 .post a {
-  display: block;
-  margin: 1rem 0 0 1rem;
+  /* display: block; */
+  /* margin: 1rem 0 0 1rem; */
 }
 .post .text {
-  margin: 1.8rem 1.8rem 0 1.8rem;
+  margin: 1.8rem 1.6rem 0 1.6rem;
 }
 .post .text hr {
   margin: 1.4rem 0 2rem 0;
@@ -201,17 +218,18 @@ li {
 }
 .post .text h3 {
   font-size: 1.5rem;
-  margin: 1.2rem 0 1.5rem 0;
+  margin: 1.2rem 0 1.2rem 0;
 }
 .post .text p {
-  font-size: 1.3rem;
+  line-height: 1.65;
+  font-size: 1.15rem;
+  margin: 0 0 1.5rem 0;
 }
 
 @media screen and (min-width: 800px) {
   .post {
     max-width: 800px;
     margin: 0 auto;
-    background-color: oldlace;
     border: 1px solid;
   }
 }
