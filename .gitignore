@@ -2,4 +2,5 @@
 post-idea-*.txt
 *.txt
 node_modules
+.env
 *.log

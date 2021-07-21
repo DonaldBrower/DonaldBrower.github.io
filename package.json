@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/DonaldBrower/DonaldBrower.github.io#readme",
   "dependencies": {
+    "chokidar": "^3.5.2",
+    "dotenv": "^10.0.0",
     "node-html-parser": "^4.1.0",
     "showdown": "^1.9.1"
   }

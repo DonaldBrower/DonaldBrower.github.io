@@ -1,13 +1,30 @@
 const fs = require("fs/promises");
 const path = require("path");
+
+const chokidar = require("chokidar");
+require("dotenv").config();
+
 const showdown = require("showdown");
 const { parse } = require("node-html-parser");
 
-const mdDir = "/Users/donaldbrower/git/postsandprograms.com/md";
-const htmlDir = "/Users/donaldbrower/git/postsandprograms.com/posts";
+startWatcher(process.env.MDPATH, process.env.HTMLPATH);
 
-const mdFile = "20210618.md";
-const htmlFile = "20210618.html";
+async function startWatcher(mdDir, htmlDir) {
+  chokidar.watch([mdDir]).on("all", async (e, mdFile) => {
+    if (mdFile.match(/\.md/g)) {
+      try {
+        const htmlFile = path.join(
+          htmlDir,
+          path.basename(mdFile).replace(".md", ".html")
+        );
+
+        await convertMDChange(mdFile, htmlFile);
+      } catch (err) {
+        throw err;
+      }
+    }
+  });
+}
 
 const classMap = {
   code: "language-js",
@@ -23,38 +40,31 @@ const converter = new showdown.Converter({
   extensions: [...bindings],
 });
 
-(async function main() {
-  const mdToConvert = await getFile(path.join(mdDir, mdFile));
-  const htmlToWorkOn = await getFile(path.join(htmlDir, htmlFile));
-  let htmlDocument = parse(htmlToWorkOn);
+async function convertMDChange(mdFile, htmlFile) {
+  const md = await getFile(path.join(mdFile));
 
-  const theTextToReplace = htmlDocument.querySelector(".text");
-  theTextToReplace.innerHTML = converter.makeHtml(mdToConvert);
+  const html = await getFile(htmlFile);
+  let dom = parse(html);
 
-  await replaceFile(path.join(htmlDir, htmlFile), htmlDocument.innerHTML);
-})();
+  const container = dom.querySelector(".text");
+  container.innerHTML = converter.makeHtml(md);
 
-async function getFile(thePath) {
+  await updateFile(htmlFile, dom.innerHTML);
+}
+
+async function getFile(filePath) {
   try {
-    return await fs.readFile(thePath, "utf8");
+    return await fs.readFile(filePath, "utf8");
   } catch (e) {
     console.error("error: ", e.message);
   }
 }
 
-async function replaceFile(thePath, content) {
+async function updateFile(filePath, content) {
   try {
-    await fs.unlink(thePath);
-    await fs.writeFile(thePath, content);
+    await fs.unlink(filePath);
+    await fs.writeFile(filePath, content);
   } catch (e) {
     console.error("errors: ", e.message);
   }
 }
-
-const text = `
-# 1st Heading
-## 2nd Heading
-
-- first item
-- second item
-`;
