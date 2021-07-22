@@ -12,6 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="./../vendor/css/prism.css">
 </head>
 
 <body>
@@ -20,9 +21,27 @@
     <section class="hat">
     </section>
 
-    <aritcle class="text">
-      <h2>Fix for when generated backgrounds with opactity set cause opacity rules to bleed into child elements</h2>
-    </aritcle>
+    <div class="text"><h2 id="opacityfixformagicpatterncssbackgroundcode">Opacity Fix for Magic Pattern CSS Background Code</h2>
+<p>There's a tool called <a href="https://www.magicpattern.design/tools/css-backgrounds">Magic Pattern</a> which generates background patterns in CSS. When using the generated rules on an element, the background styles bleed into the child elements' backgrounds.</p>
+<img src="./../images/background-bug-1.png" alt="Screen shot of the webpage. there is a single column of content, 800px wide with lots of space on the margins. there is a background pattern applied to the body element, and it should only fill up the extra space, but because of the bug we are about to explain, it also fills up the backgrounds of the body's child elements." >
+<pre><code class="language-js" >body {
+  background-color: #e5e5f7;
+  opacity: 0.4;
+  background-image: radial-gradient(#444cf7 2px, #e5e5f7 2px);
+  background-size: 40px 40px;
+}
+</code></pre>
+<p>Fix this by removing the opacity rule, and replacing the radial-gradient hex color arguments with rgba values and the <em>a</em> value equal to the original opacity rule</p>
+<pre><code class="language-js" >body {
+  background-color: #e5e5f7;
+  background-image: radial-gradient(
+    rgba(68, 76, 247, .4) 2px,
+    rgba(229, 229, 247, .4) 2px
+  );
+  background-size: 40px 40px;
+}
+</code></pre>
+<img src="./../images/background-bug-2.png" alt="The same webpage pictured above, but with the css fix applied, so it appears that the child elements ar  resting atop the body's background, with their own backgrounds" ></div>
   </div>
   <script src="../vendor/js/prism.js"></script>
 </body>

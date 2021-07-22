@@ -13,12 +13,13 @@ async function startWatcher(mdDir, htmlDir) {
   chokidar.watch([mdDir]).on("all", async (e, mdFile) => {
     if (mdFile.match(/\.md/g)) {
       try {
+        console.log(`.. Converting ${path.basename(mdFile)}`);
         const htmlFile = path.join(
           htmlDir,
           path.basename(mdFile).replace(".md", ".html")
         );
 
-        await convertMDChange(mdFile, htmlFile);
+        await convert(mdFile, htmlFile);
       } catch (err) {
         throw err;
       }
@@ -36,11 +37,27 @@ const bindings = Object.keys(classMap).map((key) => ({
   replace: `<${key} class="${classMap[key]}" $1>`,
 }));
 
-const converter = new showdown.Converter({
-  extensions: [...bindings],
+showdown.extension("remove-p-from-img", function () {
+  return [
+    {
+      type: "output",
+      filter: function (text) {
+        text = text.replace(
+          /(<\/?p[^>]*>)(?=<img.+>)|(<\/?p[^>]*>)(?<=<img.+>)/g,
+          ""
+        );
+
+        return text;
+      },
+    },
+  ];
 });
 
-async function convertMDChange(mdFile, htmlFile) {
+const converter = new showdown.Converter({
+  extensions: [...bindings, "remove-p-from-img"],
+});
+
+async function convert(mdFile, htmlFile) {
   const md = await getFile(path.join(mdFile));
 
   const html = await getFile(htmlFile);

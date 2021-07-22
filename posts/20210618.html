@@ -22,10 +22,10 @@
     <section class="text"><h2 id="solutionstoproblemsetsfromjshardparts">Solutions to Problem Sets from JS: Hard Parts</h2>
 <p>Problem sets to help you understand the different features of JS:</p>
 <ul>
-<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/async">Async function execution, callbacks, the callback queue</a></li>
-<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/closure">JS Scope, variable environments, and programming with closure</a></li>
-<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/promise">Promises, deferring, the microtask queue</a></li>
-<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/oop">Object prototypes, the class syntax</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/async">Async function execution, callbacks, the callback queue</a> — <a href="#async">examples</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/closure">JS Scope, variable environments, and programming with closure</a> — <a href="#">examples</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/promise">Promises, deferring, the microtask queue</a> — <a href="#">examples</a></li>
+<li><a href="https://github.com/DonaldBrower/js-hardparts-solutions/tree/master/oop">Object prototypes, the class syntax</a> — <a href="#">examples</a></li>
 </ul>
 <p>The questions were created by someone at Codesmith, and the answers are ones that I wrote.</p>
 <h3 id="async">Async</h3>
@@ -85,6 +85,37 @@ setTimeout(() =&gt; {
 }, 8000); // -&gt; 'hi'
 
 // ?? using iterm to run file, there is a second pause in between when cb for last setTimeout? I would expect it to just cut out right there
+</code></pre>
+<h4 id="secondclock">Second Clock</h4>
+<pre><code class="language-js" >class SecondClock {
+  constructor(cb) {
+    this.cb = cb;
+    this.secondsHand = 0;
+    this.clock = undefined;
+  }
+  start() {
+    this.clock = setInterval(() =&gt; {
+      this.cb(++this.secondsHand);
+    }, 1000);
+  }
+  reset() {
+    clearInterval(this.clock);
+  }
+}
+
+//tests
+
+const clock = new SecondClock((val) =&gt; {
+  console.log(val);
+});
+
+console.log("Started Clock.");
+clock.start();
+
+setTimeout(() =&gt; {
+  clock.reset();
+  console.log("Stopped Clock after 6 seconds.");
+}, 6000);
 </code></pre></section>
   </div>
   <script src="./../vendor/js/prism.js"></script>
