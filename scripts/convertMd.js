@@ -3,7 +3,6 @@ const path = require("path");
 
 const chokidar = require("chokidar");
 require("dotenv").config();
-
 const showdown = require("showdown");
 const { parse } = require("node-html-parser");
 
@@ -37,7 +36,7 @@ const bindings = Object.keys(classMap).map((key) => ({
   replace: `<${key} class="${classMap[key]}" $1>`,
 }));
 
-showdown.extension("remove-p-from-img", function () {
+bindings.push(function removePFromImg() {
   return [
     {
       type: "output",
@@ -53,8 +52,25 @@ showdown.extension("remove-p-from-img", function () {
   ];
 });
 
+// showdown.extension("remove-p-from-img", function () {
+//   return [
+//     {
+//       type: "output",
+//       filter: function (text) {
+//         text = text.replace(
+//           /(<\/?p[^>]*>)(?=<img.+>)|(<\/?p[^>]*>)(?<=<img.+>)/g,
+//           ""
+//         );
+
+//         return text;
+//       },
+//     },
+//   ];
+// });
+
 const converter = new showdown.Converter({
-  extensions: [...bindings, "remove-p-from-img"],
+  // extensions: [...bindings, "remove-p-from-img"],
+  extensions: [...bindings],
 });
 
 async function convert(mdFile, htmlFile) {

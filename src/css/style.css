@@ -1,0 +1,314 @@
+/* 
+TABLE OF CONTENTS
+
+  1. resets & global defaults
+  2. index.html
+    2.1 mobile 
+    2.2 landscape mobile 
+    2.3 tablet
+    2.4 landscape tablet
+    2.5 small laptop
+    2.6 large laptop
+    2.7 small monitor
+    2.8 large monitor
+  3. <post>.html
+*/
+
+/* variables */
+:root {
+  /* --post-content-padding-horizontal: 0 1rem 0 1rem; */
+  /* --post-content-padding-vert: 1rem 0 1rem 0; */
+}
+
+/* 1. resets & global defaults */
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f6f6fd;
+  font-family: "Libre Baskerville", serif;
+}
+body {
+  /* background-color: #e5e5f7;
+  background-image: radial-gradient(
+    rgba(255, 0, 0, 0.3) 1.6500000000000001px,
+    rgba(229, 229, 247, 0.3) 1.6500000000000001px
+  );
+  background-size: 33px 33px; */
+  background-color: #4158d0;
+  background-image: linear-gradient(
+    43deg,
+    #4158d0 0%,
+    #c850c0 46%,
+    #ffcc70 100%
+  );
+  color: #1c1c1c;
+}
+p {
+  line-height: 1.35;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 100;
+}
+li {
+  list-style-type: none;
+}
+
+a:visited {
+  color: #0000ee;
+}
+
+/* default word wrapping for prsimjs pre and code blocks */
+code[class*="language-"],
+pre[class*="language-"] {
+  white-space: pre-wrap !important;
+}
+
+/* 2 index.html - base & mobile first*/
+
+.index {
+  background-color: #f6f6fd;
+
+  .hat {
+    background-image: url("./../images/laserlense.jpg");
+    width: 100vw;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    background-size: cover;
+    color: white;
+
+    h1 {
+      margin: 3rem 0 0 0;
+      font-weight: 100;
+      font-size: 3rem;
+    }
+    nav {
+      display: flex;
+
+      p {
+        border: 1px solid white;
+        border-bottom: none;
+        padding: 0.4rem 1.2rem 1rem 0.5rem;
+        align-self: self-end;
+        font-size: larger;
+        font-size: 2rem;
+        margin: 0 12rem 0 7rem;
+      }
+      ul {
+        display: flex;
+        /* flex-direction: column; */
+        align-items: end;
+        margin: 0 0 0 1rem;
+
+        margin: 0 auto;
+
+        li {
+          margin: 0rem 9rem 0 0;
+          border: 1px solid;
+          border-bottom: 0;
+          padding: 0.5rem 1rem 0.5rem 1rem;
+          color: white;
+
+          /* some of the above styles should go into desktop only media queries */
+          margin: 0;
+          justify-content: space-between;
+          align-items: center;
+
+          a {
+            color: white;
+            /* goose */
+          }
+        }
+      }
+    }
+  }
+}
+
+.posts {
+}
+.posts li {
+  background: rgb(239, 10, 98);
+  background: linear-gradient(
+    90deg,
+    rgba(239, 10, 98, 0.0634453610545781) 35%,
+    rgba(234, 198, 227, 0.4976190305223652) 100%
+  );
+  border-radius: 0.2rem;
+  list-style-type: none;
+  padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+  margin: 0.8rem 0.8rem 0.175rem 0.8rem;
+}
+.posts ul {
+  display: flex;
+  flex-direction: column;
+}
+.posts ul li article a {
+  margin: 0 0 0.6rem 0;
+}
+.posts ul li article p {
+  margin: 1.1rem 0 0 0;
+}
+
+@media screen and (min-width: 420px) {
+  .index .hat {
+    text-align: end;
+
+    h1 {
+      margin: 0.75rem 1.25rem 0 0;
+    }
+    nav {
+      align-self: end;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+/* landscape mode for mobile phones */
+@media screen and (min-width: 630px) {
+  .index {
+    max-width: 630px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .index .hat {
+    max-width: 630px;
+  }
+}
+
+/* 3. <post>.html */
+
+.post {
+  background-color: #f6f6fd;
+
+  .hat {
+    background-image: url("./../images/laserlense.jpg");
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    background-size: cover;
+    color: white;
+  }
+
+  .text {
+    h2 {
+      font-size: 1.8rem;
+      margin: 1rem;
+      text-decoration: underline;
+    }
+    h3 {
+      font-size: 1.5rem;
+      margin: 1rem;
+    }
+    h4 {
+      font-size: 1.15rem;
+      margin: 1rem;
+    }
+    p {
+      line-height: 1.4;
+      font-size: 1.15rem;
+      margin: 1rem;
+    }
+    ul {
+      line-height: 1.4rem;
+      margin: 1rem;
+
+      li {
+        list-style-type: none;
+      }
+    }
+
+    img {
+      display: block;
+      width: 100vw;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .post {
+    max-width: 1000px;
+    margin: 0 auto;
+
+    .hat {
+      margin: 0 0 4rem 0;
+    }
+    .text {
+      /*border-right: 0.6rem solid #4f4f4f;
+      border-left: 0.6rem solid #4f4f4f;
+      border-bottom: 0.12rem solid #4f4f4f; */
+      margin: 0 0 4rem 0;
+
+      p,
+      ul,
+      li,
+      h2,
+      h3,
+      h4 {
+        margin: 2rem 12rem 0rem 5rem;
+      }
+      hr {
+        color: #d8d8eb;
+        margin-top: 2rem;
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 2rem;
+      }
+      h3,
+      h4 {
+        margin-bottom: 1rem;
+      }
+      p {
+        /* margin: 0 0 */
+        margin-top: 0;
+        /* margin-top: 3rem; */
+        margin-bottom: 2rem;
+      }
+      h2 {
+        font-size: 3.5rem;
+        padding: 3rem 0 0 0;
+      }
+      li {
+        margin: 0.5rem 0 0 0;
+      }
+      img {
+        max-width: 950px;
+        margin: 0 auto;
+      }
+      ul {
+        border: 2px solid rgb(229, 229, 247);
+        border-radius: 3px;
+        padding: 1rem 1rem 1.5rem 1.25rem;
+      }
+      pre {
+        margin-bottom: 2.5rem;
+      }
+    }
+  }
+}

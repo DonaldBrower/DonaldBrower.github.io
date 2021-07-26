@@ -4,3 +4,4 @@ post-idea-*.txt
 node_modules
 .env
 *.log
+.vscode
