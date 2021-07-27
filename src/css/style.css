@@ -273,8 +273,10 @@ pre[class*="language-"] {
         margin: 2rem 12rem 0rem 5rem;
       }
       hr {
-        color: #d8d8eb;
+        color: rgb(255, 255, 255);
         margin-top: 2rem;
+        margin-right: 2rem;
+        margin-left: 2rem;
       }
       h2 {
         margin-top: 0;
@@ -308,6 +310,8 @@ pre[class*="language-"] {
       }
       pre {
         margin-bottom: 2.5rem;
+        margin-right: 7.5rem;
+        margin-left: 4.75rem;
       }
     }
   }

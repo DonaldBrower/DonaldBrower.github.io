@@ -1,8 +1,8 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-const chokidar = require("chokidar");
 require("dotenv").config();
+const chokidar = require("chokidar");
 const showdown = require("showdown");
 const { parse } = require("node-html-parser");
 
@@ -13,6 +13,7 @@ async function startWatcher(mdDir, htmlDir) {
     if (mdFile.match(/\.md/g)) {
       try {
         console.log(`.. Converting ${path.basename(mdFile)}`);
+
         const htmlFile = path.join(
           htmlDir,
           path.basename(mdFile).replace(".md", ".html")
@@ -52,33 +53,21 @@ bindings.push(function removePFromImg() {
   ];
 });
 
-// showdown.extension("remove-p-from-img", function () {
-//   return [
-//     {
-//       type: "output",
-//       filter: function (text) {
-//         text = text.replace(
-//           /(<\/?p[^>]*>)(?=<img.+>)|(<\/?p[^>]*>)(?<=<img.+>)/g,
-//           ""
-//         );
-
-//         return text;
-//       },
-//     },
-//   ];
-// });
-
 const converter = new showdown.Converter({
-  // extensions: [...bindings, "remove-p-from-img"],
   extensions: [...bindings],
 });
 
 async function convert(mdFile, htmlFile) {
   const md = await getFile(path.join(mdFile));
 
-  const html = await getFile(htmlFile);
-  let dom = parse(html);
+  let html = await getFile(htmlFile);
+  if (!html) {
+    html = await getFile(
+      path.join(process.env.TEMPLATEPATH, "posts.template.html")
+    );
+  }
 
+  let dom = parse(html);
   const container = dom.querySelector(".text");
   container.innerHTML = converter.makeHtml(md);
 
@@ -89,13 +78,20 @@ async function getFile(filePath) {
   try {
     return await fs.readFile(filePath, "utf8");
   } catch (e) {
-    console.error("error: ", e.message);
+    console.warn(
+      `Creating markup from template for post: ${path.basename(filePath)}`
+    );
   }
 }
 
 async function updateFile(filePath, content) {
   try {
-    await fs.unlink(filePath);
+    try {
+      await fs.unlink(filePath);
+    } catch (e) {
+      console.log();
+    }
+
     await fs.writeFile(filePath, content);
   } catch (e) {
     console.error("errors: ", e.message);
