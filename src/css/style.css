@@ -12,6 +12,7 @@ TABLE OF CONTENTS
     2.7 small monitor
     2.8 large monitor
   3. <post>.html
+  4. about.html
 */
 
 /* variables */
@@ -48,12 +49,19 @@ body {
     rgba(229, 229, 247, 0.3) 1.6500000000000001px
   );
   background-size: 33px 33px; */
-  background-color: #4158d0;
+  /*  background-color: #4158d0;
   background-image: linear-gradient(
     43deg,
     #4158d0 0%,
     #c850c0 46%,
     #ffcc70 100%
+  );
+*/
+  background-color: #d9afd9;
+  background-image: linear-gradient(
+    0deg,
+    rgba(217, 175, 217, 0.8) 0%,
+    rgba(151, 217, 225, 0.8) 100%
   );
   color: #1c1c1c;
 }
@@ -86,7 +94,7 @@ pre[class*="language-"] {
   background-color: #f6f6fd;
 
   .hat {
-    background-image: url("./../images/cat.jpg");
+    background-image: url("./../images/sky.jpg");
     width: 100vw;
     height: 20rem;
     display: flex;
@@ -106,7 +114,9 @@ pre[class*="language-"] {
 
       p {
         border: 1px solid white;
+        border-right: none;
         border-bottom: none;
+
         padding: 0.4rem 1.2rem 1rem 0.5rem;
         align-self: self-end;
         font-size: larger;
@@ -125,6 +135,7 @@ pre[class*="language-"] {
           margin: 0rem 9rem 0 0;
           border: 1px solid;
           border-bottom: 0;
+          border-right: none;
           padding: 0.5rem 1rem 0.5rem 1rem;
           color: white;
 
@@ -143,8 +154,6 @@ pre[class*="language-"] {
   }
 }
 
-.posts {
-}
 .posts li {
   background: rgb(239, 10, 98);
   background: linear-gradient(
@@ -169,18 +178,30 @@ pre[class*="language-"] {
 }
 
 @media screen and (min-width: 420px) {
-  .index .hat {
-    text-align: end;
+  body {
+    padding-top: 3.25rem;
+    .index {
+      box-sizing: content-box;
+      padding-top: 2rem;
 
-    h1 {
-      margin: 0.75rem 1.25rem 0 0;
-    }
-    nav {
-      align-self: end;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      border-right: 30px solid white;
+      border-left: 30px solid white;
+      .hat {
+        text-align: end;
 
-      ul {
-        display: flex;
-        flex-direction: column;
+        h1 {
+          margin: 0.75rem 1.25rem 0 0;
+        }
+        nav {
+          align-self: end;
+
+          ul {
+            display: flex;
+            flex-direction: column;
+          }
+        }
       }
     }
   }
@@ -352,4 +373,9 @@ pre[class*="language-"] {
       }
     }
   }
+}
+
+/* 4: about.html styles */
+.images {
+  width: 100vw;
 }

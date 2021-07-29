@@ -27,7 +27,93 @@
 solve("HO2")  // H2O2
 
 solve("Au(OKIP33)2")  // AuK66I66O66P66
-</code></pre></article>
+</code></pre>
+<p>We'll use pattern matching, iteration, and variable assignment to achieve the answer. There will also be tuples. The following JSON output is from about halfway through the program's construction. From this block of data, we have everything that we need to know in order to expand all of the content between grouping symbols and coeficents before any other operations.</p>
+<p>We have a set of tuples [n, m] where n is the parsed atom "Mg" for example, and M is the current number of that atom after any inner coeficent. we can now join the tuples together, and replace the section of the formula string where it came from with the new content, and once that is done from right to left, the string will be ready to be expanded into groups and multiplied by the group multipliers.</p>
+<pre><code class="language-js" >// input formula: MgA4(OgHKLMg(HOg3)2(KP9))
+[
+  {
+    "content": "MgA",
+    "idxFirst": 0,
+    "coefficient": 4,
+    "wholegroupIdxLast": 3,
+    "tokens": [
+      [
+        "Mg",
+        4
+      ],
+      [
+        "A",
+        4
+      ]
+    ]
+  },
+  {
+    "content": "OgHKLMg",
+    "idxFirst": 5,
+    "coefficient": 0,
+    "wholegroupIdxLast": 11,
+    "tokens": [
+      [
+        "Og",
+        1
+      ],
+      [
+        "H",
+        1
+      ],
+      [
+        "K",
+        1
+      ],
+      [
+        "L",
+        1
+      ],
+      [
+        "Mg",
+        1
+      ]
+    ]
+  },
+  {
+    "content": "HOg",
+    "idxFirst": 13,
+    "coefficient": 3,
+    "wholegroupIdxLast": 16,
+    "tokens": [
+      [
+        "H",
+        3
+      ],
+      [
+        "Og",
+        3
+      ]
+    ]
+  },
+  {
+    "content": "KP",
+    "idxFirst": 20,
+    "coefficient": 9,
+    "wholegroupIdxLast": 22,
+    "tokens": [
+      [
+        "K",
+        9
+      ],
+      [
+        "P",
+        9
+      ]
+    ]
+  }
+]
+</code></pre>
+<p>This post will be about the steps taken to get to this point, and the steps to finish the solution. </p>
+<p>Here's what we get once we're done processing this array of group objects:</p>
+<p><code class="language-js" >MgA4(Og1H1K1L1Mg1(H3Og3)2(K9P9))
+</code></p></article>
   </div>
   <script src="./../vendor/js/prism.js"></script>
 </body>
