@@ -16,7 +16,80 @@
 
 <body>
   <div class="post">
-    <section class="text"><h1 id="helloworld">Hello world!</h1></section>
+    <nav>
+      <a href="../index.html">&lt;-- Home</a>
+    </nav>
+    <article class="text"><h2 id="july27thupdateonprojects">July 27th: Update on projects</h2>
+<ul>
+<li><a href="https://github.com/DonaldBrower/DonaldBrower.github.io/blob/gh-pages/scripts/convertMd.js">This blog</a></li>
+<li><a href="#">Problem set from JS Deep Foundations</a></li>
+</ul>
+<h3 id="theblog">The blog</h3>
+<p>I've created a script in Node that watches a folder of <code class="language-js" >.md</code> files, and when a new file is added, the script creates a corresponding html file based off a template. The script converts the markdown to html and inserts it into the innerHTML of <code>&lt;section class="text"&gt;</code> in the new file. </p>
+<p>That's how new posts are created. From there, everytime the markdown file is saved, it will be converted and the innerHTML will be updated.</p>
+<p>The command <code class="language-js" >node scripts/convertMd.js</code> begins the watcher. Any changes to the markdown folder since it last last ran are converted immediately on calling the script.</p>
+<p>The only other thing happening serverside is that the css file is watched by a PostCSS plugin, PreCSS, which lets me write nested css rules.</p>
+<h3 id="problemsetfromjsdeepfoundations">Problem set from JS: Deep Foundations</h3>
+<p>Problem 1: Define a polyfill for the built in <code class="language-js" >Object.is()</code> method:</p>
+<pre><code class="language-js" >if (!Object.is || true) {
+  Object.is = function (a, b) {
+    if (isItNaN(a) &amp;&amp; isItNaN(b)) {
+      return true;
+    }
+    if (a === 0 &amp;&amp; b === 0) {
+      return isNegativeZero(a) === isNegativeZero(b);
+    }
+
+    return a === b;
+  };
+}
+// function isNotANumber(x) {
+//   if (typeof x === "number" &amp;&amp; x.toString() === "NaN") {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+function isItNaN(x) {
+  return x !== x;
+}
+function isNegativeZero(x) {
+  if (x === 0 &amp;&amp; -Infinity / x === Infinity) {
+    return true;
+  } else if (x === 0 &amp;&amp; -Infinity / x === -Infinity) {
+    return false;
+  }
+}
+</code></pre>
+<p>Problem 2: Write two validator functions</p>
+<pre><code class="language-js" >function isValidName(name) {
+  if (
+    typeof name === "string" &amp;&amp;
+    name.length &gt; 0 &amp;&amp;
+    name.replace(/[\s]/g, "").length &gt;= 3
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function hoursAttended(attended, length) {
+  if (length &amp;&amp; attended) {
+    if (attended === "" || length === "") return false;
+
+    if (!["string", "number"].includes(typeof attended)) return false;
+    if (!["string", "number"].includes(typeof length)) return false;
+
+    if (String(length).match(/[.]/g) || String(attended).match(/[.]/g))
+      return false;
+
+    if (Number(attended) &lt;= Number(length)) return true;
+  }
+
+  return false;
+}
+</code></pre></article>
   </div>
   <script src="./../vendor/js/prism.js"></script>
 </body>

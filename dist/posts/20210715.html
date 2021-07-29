@@ -4,22 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=s, initial-scale=1.0">
-  <title>Fix for when generated backgrounds with opactity set cause opacity rules to bleed into child elements</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./../css/parsed.style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="./../vendor/css/prism.css">
+  <title></title>
 </head>
 
 <body>
   <div class="post">
-    
-
-    <div class="text"><h2 id="opacityfixformagicpatterncssbackgroundcode">Opacity Fix for Magic Pattern CSS Background Code</h2>
+    <nav>
+      <a href="../index.html">&lt;-- Home</a>
+    </nav>
+    <article class="text"><h2 id="opacityfixformagicpatterncssbackgroundcode">Opacity Fix for Magic Pattern CSS Background Code</h2>
 <p>There's a tool called <a href="https://www.magicpattern.design/tools/css-backgrounds">Magic Pattern</a> which generates background patterns in CSS. When using the generated rules on an element, the background styles bleed into the child elements' backgrounds.</p>
 <img src="./../images/background-bug-1.png" alt="Screen shot of the webpage. there is a single column of content, 800px wide with lots of space on the margins. there is a background pattern applied to the body element, and it should only fill up the extra space, but because of the bug we are about to explain, it also fills up the backgrounds of the body's child elements." >
 <pre><code class="language-js" >body {
@@ -39,9 +39,9 @@
   background-size: 40px 40px;
 }
 </code></pre>
-<img src="./../images/background-bug-2.png" alt="The same webpage pictured above, but with the css fix applied, so it appears that the child elements ar  resting atop the body's background, with their own backgrounds" ></div>
+<img src="./../images/background-bug-2.png" alt="The same webpage pictured above, but with the css fix applied, so it appears that the child elements ar  resting atop the body's background, with their own backgrounds" ></article>
   </div>
-  <script src="../vendor/js/prism.js"></script>
+  <script src="./../vendor/js/prism.js"></script>
 </body>
 
 </html>
