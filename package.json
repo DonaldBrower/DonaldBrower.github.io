@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postcss": "postcss src/css/style.css -w -u precss -o dist/css/parsed.style.css"
+    "postcss": "postcss src/css/style.css -w -u precss -o dist/css/parsed.style.css",
+    "build": "concurrently \"postcss src/css/style.css -u precss -o dist/css/parsed.style.css\" \"node ./scripts/convertMd.js --build\"",
+    "watch": "concurrently \"postcss src/css/style.css -w -u precss -o dist/css/parsed.style.css\" \"node ./scripts/convertMd.js --watch\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,8 @@
     "showdown": "^1.9.1"
   },
   "devDependencies": {
+    "concurrently": "^6.2.0",
+    "minimist": "^1.2.5",
     "postcss": "^8.3.6",
     "postcss-cli": "^8.3.1",
     "precss": "^4.0.0"

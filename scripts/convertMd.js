@@ -1,12 +1,80 @@
+#!usr/bin/env node
+
+"use strict";
+
 const fs = require("fs/promises");
 const path = require("path");
 
 require("dotenv").config();
+const args = require("minimist")(process.argv.slice(2));
 const chokidar = require("chokidar");
 const showdown = require("showdown");
 const { parse } = require("node-html-parser");
 
-startWatcher(process.env.MDPATH, process.env.HTMLPATH);
+console.log("ARGS");
+console.log(args);
+
+printHelp();
+
+if (args.build) {
+  buildSite();
+} else if (args.watch) {
+  startWatcher(process.env.MDPATH, process.env.HTMLPATH);
+}
+
+async function buildSite() {
+  const { MDPATH, HTMLPATH, TEMPLATEPATH } = process.env;
+
+  try {
+    const mdFiles = await fs.readdir(MDPATH);
+    const postsFiles = await fs.readdir(HTMLPATH);
+    // const templateFiles = await fs.readdir(TEMPLATEPATH);
+
+    const promises = [];
+    postsFiles.forEach((file) => {
+      if (file.match(/\.html/g)) {
+        const fullPath = path.join(HTMLPATH, file);
+        promises.push(async function () {
+          try {
+            await fs.unlink(fullPath);
+          } catch (e) {
+            console.error("Couldn't unlink the post files in the build step");
+            console.error("");
+            console.error(e);
+          }
+        });
+      }
+    });
+    await Promise.all(promises.map((fx) => fx()));
+
+    const convertPromises = [];
+    mdFiles.forEach((file) => {
+      if (file.match(/\.md/g)) {
+        const mdFullPath = path.join(MDPATH, file);
+        const htmlFullPath = path.join(HTMLPATH, file.replace(".md", ".html"));
+
+        convertPromises.push(async function () {
+          try {
+            await convert(mdFullPath, htmlFullPath);
+          } catch (e) {
+            console.error(
+              "ERROR: Could not create the new html files from the markdown files in the build step"
+            );
+            console.error("");
+            console.error(e);
+          }
+        });
+      }
+    });
+    await Promise.all(convertPromises.map((fx) => fx()));
+
+    console.log("who knows");
+  } catch (e) {
+    console.error("there were errors reading the files");
+    console.error("");
+    console.error(e);
+  }
+}
 
 async function startWatcher(mdDir, htmlDir) {
   chokidar
@@ -140,4 +208,19 @@ async function updateFile(filePath, content) {
   } catch (e) {
     console.error("errors: ", e.message);
   }
+}
+
+//*********************************************/
+
+function printHelp() {
+  console.log("convertMd usage:");
+  console.log("  convertMd --help");
+  console.log("  convertMd --build");
+  console.log("  convertMd --watch");
+  console.log(" ");
+  console.log("--help                     print this help message");
+  console.log(
+    "--build                    build the site once--files to be served will be in dist/"
+  );
+  console.log("--watch                    watch the source for changes");
 }
