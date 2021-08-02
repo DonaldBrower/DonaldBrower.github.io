@@ -2,84 +2,84 @@
 
 "use strict";
 
-const fs = require("fs/promises");
-const path = require("path");
+var fs = require("fs/promises");
+var path = require("path");
 
 require("dotenv").config();
-const args = require("minimist")(process.argv.slice(2));
-const chokidar = require("chokidar");
-const showdown = require("showdown");
-const { parse } = require("node-html-parser");
+var args = require("minimist")(process.argv.slice(2));
+var chokidar = require("chokidar");
+var showdown = require("showdown");
+var { parse } = require("node-html-parser");
 
-console.log("ARGS");
-console.log(args);
-
-printHelp();
+//***************************************
 
 if (args.build) {
   buildSite();
 } else if (args.watch) {
   startWatcher(process.env.MDPATH, process.env.HTMLPATH);
+} else {
+  printHelp();
 }
 
+//*****************************************
+
 async function buildSite() {
-  const { MDPATH, HTMLPATH, TEMPLATEPATH } = process.env;
+  var { MDPATH, HTMLPATH } = process.env;
 
   try {
-    const mdFiles = await fs.readdir(MDPATH);
-    const postsFiles = await fs.readdir(HTMLPATH);
-    // const templateFiles = await fs.readdir(TEMPLATEPATH);
+    var mdFiles = await fs.readdir(MDPATH);
+    var postsFiles = await fs.readdir(HTMLPATH);
 
-    const promises = [];
-    postsFiles.forEach((file) => {
+    var unlinkHtmlPromises = [];
+    postsFiles.forEach(function addUnlinkHtmlPromise(file) {
       if (file.match(/\.html/g)) {
-        const fullPath = path.join(HTMLPATH, file);
-        promises.push(async function () {
+        var fullPath = path.join(HTMLPATH, file);
+
+        unlinkHtmlPromises.push(async function clearHtml() {
           try {
             await fs.unlink(fullPath);
           } catch (e) {
-            console.error("Couldn't unlink the post files in the build step");
-            console.error("");
-            console.error(e);
+            handleError(e);
           }
         });
       }
     });
-    await Promise.all(promises.map((fx) => fx()));
 
-    const convertPromises = [];
-    mdFiles.forEach((file) => {
+    await Promise.all(
+      unlinkHtmlPromises.map(function callPromise(fx) {
+        return fx();
+      })
+    );
+
+    var convertPromises = [];
+    mdFiles.forEach(function addConvertMdPromise(file) {
       if (file.match(/\.md/g)) {
-        const mdFullPath = path.join(MDPATH, file);
-        const htmlFullPath = path.join(HTMLPATH, file.replace(".md", ".html"));
+        var mdFullPath = path.join(MDPATH, file);
+        var htmlFullPath = path.join(HTMLPATH, file.replace(".md", ".html"));
 
-        convertPromises.push(async function () {
+        convertPromises.push(async function convertMd() {
           try {
             await convert(mdFullPath, htmlFullPath);
           } catch (e) {
-            console.error(
-              "ERROR: Could not create the new html files from the markdown files in the build step"
-            );
-            console.error("");
-            console.error(e);
+            handleError(e);
           }
         });
       }
     });
-    await Promise.all(convertPromises.map((fx) => fx()));
-
-    console.log("who knows");
+    await Promise.all(
+      convertPromises.map(function callPromise(fx) {
+        return fx();
+      })
+    );
   } catch (e) {
-    console.error("there were errors reading the files");
-    console.error("");
-    console.error(e);
+    handleError(e);
   }
 }
 
 async function startWatcher(mdDir, htmlDir) {
   chokidar
     .watch([mdDir, process.env.TEMPLATEPATH])
-    .on("all", async (e, file) => {
+    .on("all", async function doConversion(e, file) {
       if (file.match(/\.md/g)) {
         await markdownConversion(file, mdDir, htmlDir);
       } else if (file.match(/\.html/g)) {
@@ -89,23 +89,23 @@ async function startWatcher(mdDir, htmlDir) {
 }
 
 async function templateUpdate() {
-  const promises = [];
+  var promises = [];
 
   try {
-    const filenames = await fs.readdir(process.env.HTMLPATH);
+    var filenames = await fs.readdir(process.env.HTMLPATH);
 
-    filenames.forEach((file) => {
+    filenames.forEach(function handleHtml(file) {
       if (file.match(/\.html/g)) {
         promises.push(async function () {
           try {
             await fs.unlink(path.join(process.env.HTMLPATH, file));
 
-            const markdownFile = path.join(
+            var markdownFile = path.join(
               process.env.MDPATH,
               file.replace(".html", ".md")
             );
 
-            const htmlFile = path.join(process.env.HTMLPATH, file);
+            var htmlFile = path.join(process.env.HTMLPATH, file);
 
             await convert(markdownFile, htmlFile);
           } catch (e) {
@@ -115,9 +115,14 @@ async function templateUpdate() {
       }
     });
 
-    await Promise.all(promises.map((fn) => fn()));
+    await Promise.all(
+      promises.map(function invokePromise(fn) {
+        return fn();
+      })
+    );
   } catch (e) {
-    throw e;
+    handleError(e);
+    // throw e;
   }
 }
 
@@ -125,27 +130,30 @@ async function markdownConversion(mdFile, mdDir, htmlDir) {
   try {
     console.log(`.. Converting ${path.basename(mdFile)}`);
 
-    const htmlFile = path.join(
+    var htmlFile = path.join(
       htmlDir,
       path.basename(mdFile).replace(".md", ".html")
     );
 
     await convert(mdFile, htmlFile);
-  } catch (err) {
-    throw err;
+  } catch (e) {
+    handleError(e);
+    // throw err;
   }
 }
 
 async function convert(mdFile, htmlFile) {
-  const classMap = {
+  var classMap = {
     code: "language-js",
   };
 
-  const bindings = Object.keys(classMap).map((key) => ({
-    type: "output",
-    regex: new RegExp(`<${key}(.*)>`, "g"),
-    replace: `<${key} class="${classMap[key]}" $1>`,
-  }));
+  var bindings = Object.keys(classMap).map(function classMapReplacement(key) {
+    return {
+      type: "output",
+      regex: new RegExp(`<${key}(.*)>`, "g"),
+      replace: `<${key} class="${classMap[key]}" $1>`,
+    };
+  });
 
   bindings.push(function removePFromImg() {
     return [
@@ -156,29 +164,28 @@ async function convert(mdFile, htmlFile) {
             /(<\/?p[^>]*>)(?=<img.+>)|(<\/?p[^>]*>)(?<=<img.+>)/g,
             ""
           );
-
           return text;
         },
       },
     ];
   });
 
-  const converter = new showdown.Converter({
+  var converter = new showdown.Converter({
     extensions: [...bindings],
   });
 
   //********************************************* */
-  const md = await getFile(path.join(mdFile));
+  var md = await getFile(path.join(mdFile));
 
-  let html = await getFile(htmlFile);
+  var html = await getFile(htmlFile);
   if (!html) {
     html = await getFile(
       path.join(process.env.TEMPLATEPATH, "posts.template.html")
     );
   }
 
-  let dom = parse(html);
-  const container = dom.querySelector(".text");
+  var dom = parse(html);
+  var container = dom.querySelector(".text");
   container.innerHTML = converter.makeHtml(md);
 
   //error handling on changing files?
@@ -206,8 +213,15 @@ async function updateFile(filePath, content) {
 
     await fs.writeFile(filePath, content);
   } catch (e) {
-    console.error("errors: ", e.message);
+    handleError(e);
+    // console.error("errors: ", e.message);
   }
+}
+
+function handleError(e) {
+  console.error("There has been an error");
+  console.error("");
+  console.error(JSON.stringify(e, undefined, 2));
 }
 
 //*********************************************/
