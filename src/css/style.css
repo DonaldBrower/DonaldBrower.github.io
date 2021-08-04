@@ -193,7 +193,7 @@ pre[class*="language-"] {
           margin: 0.75rem 1.25rem 0 0;
         }
         nav {
-          align-self: end;
+          align-self: flex-end;
 
           ul {
             display: flex;
