@@ -96,7 +96,7 @@ pre[class*="language-"] {
 
       p {
         border: 1px solid white;
-        border-right: none;
+
         border-bottom: none;
 
         padding: 0.4rem 1.2rem 1rem 0.5rem;
@@ -117,7 +117,7 @@ pre[class*="language-"] {
           margin: 0rem 9rem 0 0;
           border: 1px solid;
           border-bottom: 0;
-          border-right: none;
+
           padding: 0.5rem 1rem 0.5rem 1rem;
           color: white;
 
@@ -134,44 +134,43 @@ pre[class*="language-"] {
       }
     }
   }
-}
 
-.posts li {
-  background: rgb(239, 10, 98);
-  background: linear-gradient(
-    90deg,
-    rgba(239, 10, 98, 0.0634453610545781) 35%,
-    rgba(234, 198, 227, 0.4976190305223652) 100%
-  );
-  border-radius: 0.2rem;
-  list-style-type: none;
-  padding: 0.8rem 0.8rem 0.8rem 0.8rem;
-  margin: 0.8rem 0.8rem 0.175rem 0.8rem;
-}
-
-.posts ul {
-  display: flex;
-  flex-direction: column;
-
-  li {
-    article {
+  .posts {
+    ul {
       display: flex;
-      flex-flow: row wrap;
-      align-content: stetch;
-      a {
-        flex-basis: 75%;
-      }
-      .article-date {
-        font-size: 1rem;
+      flex-direction: column;
+
+      li {
+        background: rgb(239, 10, 98);
+        background: linear-gradient(
+          90deg,
+          rgba(239, 10, 98, 0.0634453610545781) 35%,
+          rgba(234, 198, 227, 0.4976190305223652) 100%
+        );
+        border-radius: 0.2rem;
+        list-style-type: none;
+        padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+        margin: 0.8rem 0.8rem 0.175rem 0.8rem;
+
+        article {
+          display: flex;
+          flex-flow: row wrap;
+          align-content: stetch;
+
+          a {
+            flex-basis: 75%;
+            margin: 0 0 0.6rem 0;
+          }
+          p {
+            margin: 1.1rem 0 0 0;
+          }
+          .article-date {
+            font-size: 1rem;
+          }
+        }
       }
     }
   }
-}
-.posts ul li article a {
-  margin: 0 0 0.6rem 0;
-}
-.posts ul li article p {
-  margin: 1.1rem 0 0 0;
 }
 
 @media screen and (min-width: 420px) {
@@ -186,6 +185,7 @@ pre[class*="language-"] {
       border-top-right-radius: 5px;
       border-right: 30px solid white;
       border-left: 30px solid white;
+
       .hat {
         text-align: end;
 
@@ -205,7 +205,7 @@ pre[class*="language-"] {
   }
 }
 
-/* landscape mode for mobile phones */
+/* .index styles for landscape mode on mobile phones (min-w: 750px) */
 @media screen and (min-width: 750px) {
   .index {
     max-width: 750px;
@@ -213,6 +213,8 @@ pre[class*="language-"] {
     margin: 0 auto;
 
     .hat {
+      max-width: 750px;
+
       h1 {
         margin: 0 auto;
         font-size: 4rem;
@@ -222,13 +224,12 @@ pre[class*="language-"] {
     .posts {
       ul {
         margin-top: 1.6rem;
+
         li {
           margin: 0.8rem 1.8rem 0.175rem 1.8rem;
           margin-top: 0.5rem;
           margin-bottom: 1.6rem;
 
-          :first-child {
-          }
           article {
             a {
               font-size: 1.4rem;
@@ -246,9 +247,6 @@ pre[class*="language-"] {
         }
       }
     }
-  }
-  .index .hat {
-    max-width: 750px;
   }
 }
 
