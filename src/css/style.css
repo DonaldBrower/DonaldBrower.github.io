@@ -138,8 +138,8 @@ pre[class*="language-"] {
       li {
         background: rgb(239, 10, 98);
         background: linear-gradient(
-          153deg,
-          rgba(239, 10, 98, 0.03) 46%,
+          360deg,
+          rgba(239, 10, 98, 0.03) 26%,
           rgba(237, 160, 200, 0.71) 100%
         );
         border-radius: 0.2rem;
