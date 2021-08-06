@@ -14,9 +14,9 @@ var chokidar = require("chokidar");
 var showdown = require("showdown");
 var { parse } = require("node-html-parser");
 
+//**************************************************MAIN PROGRAM
 var site = Site();
 
-//***************************************
 if (args.build) {
   site.build();
 } else if (args.watch) {
@@ -101,146 +101,6 @@ function Site() {
       });
   }
 
-  //************************************************
-
-  async function templateUpdate() {
-    var promises = [];
-
-    try {
-      var filenames = await fs.readdir(process.env.HTMLPATH);
-
-      filenames.forEach(function handleHtml(file) {
-        if (file.match(/\.html/g)) {
-          promises.push(async function () {
-            try {
-              await fs.unlink(path.join(process.env.HTMLPATH, file));
-
-              var markdownFile = path.join(
-                process.env.MDPATH,
-                file.replace(".html", ".md")
-              );
-
-              var htmlFile = path.join(process.env.HTMLPATH, file);
-
-              await convert(markdownFile, htmlFile);
-            } catch (e) {
-              throw e;
-            }
-          });
-        }
-      });
-
-      await Promise.all(
-        promises.map(function invokePromise(fn) {
-          return fn();
-        })
-      );
-    } catch (e) {
-      handleError(e);
-      // throw e;
-    }
-  }
-
-  async function markdownConversion(mdFile, mdDir, htmlDir) {
-    try {
-      console.log(`.. Converting ${path.basename(mdFile)}`);
-
-      var htmlFile = path.join(
-        htmlDir,
-        path.basename(mdFile).replace(".md", ".html")
-      );
-
-      await convert(mdFile, htmlFile);
-    } catch (e) {
-      handleError(e);
-      // throw err;
-    }
-  }
-
-  async function convert(mdFile, htmlFile) {
-    var classMap = {
-      code: "language-js",
-    };
-
-    var bindings = Object.keys(classMap).map(function classMapReplacement(key) {
-      return {
-        type: "output",
-        regex: new RegExp(`<${key}(.*)>`, "g"),
-        replace: `<${key} class="${classMap[key]}" $1>`,
-      };
-    });
-
-    bindings.push(function removePFromImg() {
-      return [
-        {
-          type: "output",
-          filter: function (text) {
-            text = text.replace(
-              /(<\/?p[^>]*>)(?=<img.+>)|(<\/?p[^>]*>)(?<=<img.+>)/g,
-              ""
-            );
-            return text;
-          },
-        },
-      ];
-    });
-
-    var converter = new showdown.Converter({
-      extensions: [...bindings],
-    });
-
-    //********************************************* */
-    var md = await getFile(path.join(mdFile));
-
-    var html = await getFile(htmlFile);
-    if (!html) {
-      html = await getFile(
-        path.join(process.env.TEMPLATEPATH, "posts.template.html")
-      );
-    }
-
-    var dom = parse(html);
-    var container = dom.querySelector(".text");
-    container.innerHTML = converter.makeHtml(md);
-
-    //error handling on changing files?
-    await updateFile(htmlFile, dom.innerHTML);
-  }
-
-  async function getFile(filePath) {
-    try {
-      return await fs.readFile(filePath, "utf8");
-    } catch (e) {
-      console.warn(
-        `Creating markup from template for post: ${path.basename(filePath)}`
-      );
-    }
-  }
-
-  async function updateFile(filePath, content) {
-    try {
-      // it's okay to not do anything if it errors out on unlink. that just means the file isn't there
-      try {
-        await fs.unlink(filePath);
-      } catch (e) {
-        console.log();
-      }
-
-      await fs.writeFile(filePath, content);
-    } catch (e) {
-      handleError(e);
-      // console.error("errors: ", e.message);
-    }
-  }
-
-  function handleError(e) {
-    console.error("There has been an error");
-    console.error("");
-    console.error(JSON.stringify(e, undefined, 2));
-  }
-
-  //*********************************************/
-
   function help() {
     console.log("convertMd usage:");
     console.log("  convertMd --help");
@@ -253,4 +113,140 @@ function Site() {
     );
     console.log("--watch                    watch the source for changes");
   }
+}
+
+//************************************************PRIVATE FUNCTIONS
+async function templateUpdate() {
+  var promises = [];
+
+  try {
+    var filenames = await fs.readdir(process.env.HTMLPATH);
+
+    filenames.forEach(function handleHtml(file) {
+      if (file.match(/\.html/g)) {
+        promises.push(async function () {
+          try {
+            await fs.unlink(path.join(process.env.HTMLPATH, file));
+
+            var markdownFile = path.join(
+              process.env.MDPATH,
+              file.replace(".html", ".md")
+            );
+
+            var htmlFile = path.join(process.env.HTMLPATH, file);
+
+            await convert(markdownFile, htmlFile);
+          } catch (e) {
+            throw e;
+          }
+        });
+      }
+    });
+
+    await Promise.all(
+      promises.map(function invokePromise(fn) {
+        return fn();
+      })
+    );
+  } catch (e) {
+    handleError(e);
+    // throw e;
+  }
+}
+
+async function markdownConversion(mdFile, htmlDir) {
+  try {
+    console.log(`.. Converting ${path.basename(mdFile)}`);
+
+    var htmlFile = path.join(
+      htmlDir,
+      path.basename(mdFile).replace(".md", ".html")
+    );
+
+    await convert(mdFile, htmlFile);
+  } catch (e) {
+    handleError(e);
+  }
+}
+
+async function convert(mdFile, htmlFile) {
+  var classMap = {
+    code: "language-js",
+  };
+
+  var bindings = Object.keys(classMap).map(function classMapReplacement(key) {
+    return {
+      type: "output",
+      regex: new RegExp(`<${key}(.*)>`, "g"),
+      replace: `<${key} class="${classMap[key]}" $1>`,
+    };
+  });
+
+  bindings.push(function removePFromImg() {
+    return [
+      {
+        type: "output",
+        filter: function (text) {
+          text = text.replace(
+            /(<\/?p[^>]*>)(?=<img.+>)|(<\/?p[^>]*>)(?<=<img.+>)/g,
+            ""
+          );
+          return text;
+        },
+      },
+    ];
+  });
+
+  var converter = new showdown.Converter({
+    extensions: [...bindings],
+  });
+
+  //********************************************* */
+  var md = await getFile(path.join(mdFile));
+
+  var html = await getFile(htmlFile);
+  if (!html) {
+    html = await getFile(
+      path.join(process.env.TEMPLATEPATH, "posts.template.html")
+    );
+  }
+
+  var dom = parse(html);
+  var container = dom.querySelector(".text");
+  container.innerHTML = converter.makeHtml(md);
+
+  //error handling on changing files?
+  await updateFile(htmlFile, dom.innerHTML);
+}
+
+async function getFile(filePath) {
+  try {
+    return await fs.readFile(filePath, "utf8");
+  } catch (e) {
+    console.warn(
+      `Creating markup from template for post: ${path.basename(filePath)}`
+    );
+  }
+}
+
+async function updateFile(filePath, content) {
+  try {
+    // it's okay to not do anything if it errors out on unlink. that just means the file isn't there
+    try {
+      await fs.unlink(filePath);
+    } catch (e) {
+      console.log();
+    }
+
+    await fs.writeFile(filePath, content);
+  } catch (e) {
+    handleError(e);
+    // console.error("errors: ", e.message);
+  }
+}
+
+function handleError(e) {
+  console.error("There has been an error");
+  console.error("");
+  console.error(JSON.stringify(e, undefined, 2));
 }
