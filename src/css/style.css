@@ -131,6 +131,32 @@ pre[class*="language-"] {
   }
 
   .posts {
+    details {
+      summary {
+        &::marker {
+          content: "";
+        }
+        h2 {
+          text-align: right;
+          margin: 2.8rem 1.1rem 0.175rem 0.8rem;
+
+          &::before {
+            margin-right: 0.5rem;
+            content: "\21D3";
+          }
+        }
+      }
+
+      &[open] {
+        summary {
+          h2 {
+            &::before {
+              content: "\21D1";
+            }
+          }
+        }
+      }
+    }
     ul {
       display: flex;
       flex-direction: column;
@@ -173,18 +199,13 @@ pre[class*="language-"] {
   body {
     .index {
       box-sizing: content-box;
-      /* padding-top: 2rem; */
-
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      /* border-right: 30px solid white;
-      border-left: 30px solid white; */
 
       .hat {
         text-align: end;
 
         h1 {
-          /* margin: 0.75rem 1.25rem 0 0;*/
           margin: 0rem 0 0 0;
           font-size: 4.5rem;
 
@@ -208,8 +229,6 @@ pre[class*="language-"] {
 
 @media screen and (min-width: 650px) {
   body {
-    /* padding-top: 3.25rem; */
-
     .index {
       .hat {
         h1 {
