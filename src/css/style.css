@@ -70,9 +70,9 @@ pre[class*="language-"] {
   background-color: #f6f6fd;
 
   .hat {
-    background-image: url("./../images/sky.jpg");
     width: 100vw;
     height: 20rem;
+    background-image: url("./../images/sky.jpg");
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -128,7 +128,10 @@ pre[class*="language-"] {
       }
     }
   }
-
+  .posts h2 {
+    margin: 2.8rem 1.1rem 0.175rem 0.8rem;
+    text-align: right;
+  }
   .posts {
     details {
       summary {
@@ -136,9 +139,6 @@ pre[class*="language-"] {
           content: "";
         }
         h2 {
-          text-align: right;
-          margin: 2.8rem 1.1rem 0.175rem 0.8rem;
-
           &::before {
             margin-right: 0.5rem;
             content: "\21D3";
@@ -155,39 +155,69 @@ pre[class*="language-"] {
           }
         }
       }
-    }
-    ul {
-      display: flex;
-      flex-direction: column;
 
-      li {
+      ul {
+        display: flex;
+        flex-direction: column;
+
+        li {
+          background: rgb(239, 10, 98);
+          background: linear-gradient(
+            360deg,
+            rgba(239, 10, 98, 0.03) 26%,
+            rgba(237, 160, 200, 0.71) 100%
+          );
+          border-radius: 0.2rem;
+          list-style-type: none;
+          padding: 0.8rem 0.8rem 0.8rem 0.8rem;
+          margin: 0.8rem 0.8rem 0.175rem 0.8rem;
+
+          article {
+            display: flex;
+            flex-flow: column;
+            align-content: stetch;
+
+            a {
+              margin: 0 0 -0.4rem 0;
+              font-size: 1.6rem;
+            }
+            p {
+              margin: 1.1rem 0 0 0;
+            }
+            .article-date {
+              font-style: italic;
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    section {
+      margin: 0 0.8rem;
+      margin-top: 4rem;
+      border: 1px solid black;
+
+      ol {
+        border-radius: 0.2rem;
+
+        & > li p {
+          text-align: right;
+          margin: 0 1.1rem 0 0;
+        }
+      }
+      ul {
         background: rgb(239, 10, 98);
         background: linear-gradient(
           360deg,
           rgba(239, 10, 98, 0.03) 26%,
-          rgba(237, 160, 200, 0.71) 100%
+          rgba(151, 217, 225, 0.8) 100%
         );
-        border-radius: 0.2rem;
-        list-style-type: none;
-        padding: 0.8rem 0.8rem 0.8rem 0.8rem;
-        margin: 0.8rem 0.8rem 0.175rem 0.8rem;
-
-        article {
-          display: flex;
-          flex-flow: column;
-          align-content: stetch;
-
-          a {
-            margin: 0 0 -0.4rem 0;
-            font-size: 1.6rem;
-          }
-          p {
-            margin: 1.1rem 0 0 0;
-          }
-          .article-date {
-            font-style: italic;
-            font-size: 1rem;
-          }
+        li {
+          margin: 1rem 0;
+        }
+        & > li {
+          text-align: left;
         }
       }
     }
