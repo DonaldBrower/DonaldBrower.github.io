@@ -196,9 +196,12 @@ pre[class*="language-"] {
     section {
       margin: 0 0.8rem;
       margin-top: 4rem;
-      border: 1px solid black;
-
+      /* border: 1px solid black; */
+      h2 {
+        margin-top: 1.7rem;
+      }
       ol {
+        margin: 1rem 0 0 0;
         border-radius: 0.2rem;
 
         & > li p {
@@ -207,14 +210,20 @@ pre[class*="language-"] {
         }
       }
       ul {
-        background: rgb(239, 10, 98);
-        background: linear-gradient(
+        /* background: rgb(239, 10, 98); */
+        background: rgba(67, 214, 230, 0.1) 100%;
+        /* background: linear-gradient(
           360deg,
-          rgba(239, 10, 98, 0.03) 26%,
-          rgba(151, 217, 225, 0.8) 100%
-        );
+          rgba(239, 10, 98, 0.03) 0%,
+          rgba(101, 118, 120, 0.8) 100%
+        ); */
         li {
-          margin: 1rem 0;
+          margin: 1rem 0.3rem 1rem 0.3rem;
+
+          a {
+            color: black;
+            text-decoration: none;
+          }
         }
         & > li {
           text-align: left;
