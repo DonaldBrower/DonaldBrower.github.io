@@ -154,7 +154,7 @@ async function templateUpdate() {
   }
 }
 
-async function markdownConversion(mdFile, htmlDir) {
+async function markdownConversion(mdFile, mdDir, htmlDir) {
   try {
     console.log(`.. Converting ${path.basename(mdFile)}`);
 
@@ -246,6 +246,7 @@ async function updateFile(filePath, content) {
 }
 
 function handleError(e) {
+  console.trace();
   console.error("There has been an error");
   console.error("");
   console.error(JSON.stringify(e, undefined, 2));
